@@ -1,0 +1,23 @@
+
+
+1. I used list data structure words to store the substrings. I used lists because I wanted to store the
+substrings returned form subSting function. I got all the substrings of s for length of t. For each substring
+I checked whether the substring is anagram or not using the anagram function. We are using one for loop to
+iterate through the word list. Therefore the time complexity is O(n). I am using a list data structure to store
+the substrings therefore the space complexity is O(n).
+
+
+2. I used list data structure words to store the substrings. I used lists because I wanted to store the
+substrings returned form subSting function. For each i in 2 to length of given string all possible substrings is calculated and stored in list words. Then for word i.e. substring we are checking palindrome or not. I am using 3 loops
+i.e. one for iterating from length of the string to 1. the other one for iterating the list word and other one to find the palindrome. Therefore the time complexity is O(n^3). I am using a list data structure word to store the substrings therefore the space complexity is O(n).
+
+
+3. I used Kruskal's algorithm to solve this problem. I created Edge class and stored the edge object in list data structure edges.I choose list data structure to store edge objects. So it can be easily sortedbased on cost and for each edge value we can get the indices. If the indices are not equal we can get theunion of vertices and store the set of vertices, in the first vertex and pop the other vertex.I choose list of sets to store the vertcies because with sets we can do the union operation. Why I choose list of sets is to store a set of vertices in each list item. Sorting of edges takes O(ElogE) time. After sorting, we iterate through all the edges and apply union find algorithm. The find and union operations can take almost O(logV) time. The value of E can almost O(V2), so O(logV) and O(logE) are same. Therefore overall time complexity is O(ElogV) or O(ElogV) and space complexity is O(E).
+
+
+4. I used Node class to store the tree. I used the insert and search functions in the Node class to insert the data
+into tree and to check if n1 and n2 exists. I used the queue data structure to store the values from the matrix and then insert into the tree by popping the data from the queue. I used the in-order traversal to print the tree. I used the lca function to calculate the lca. If both n1 and n2 are smaller than root, then LCA lies on left. If both n1 and n2 are greater than root, then LCA lies on right. I am using one loop to iterate the queue. Therefore the time complexity is O(n) and using queue data structure to store the values so space complexity is O(n)
+
+
+5. I am making use of two pointers for finding the mth number from the end. Set right pointer at m nodes away from head.
+ Move the block down the linked list. Now return left pointer, its at the mth to last element! I am using a loop to iterate through all the elements in the linked list therefore the time complexity is O(n) and space complexity is length*sizeof(Node).
