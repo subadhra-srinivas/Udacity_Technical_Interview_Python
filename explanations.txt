@@ -3,8 +3,8 @@
 1. I used list data structure words to store the substrings. I used lists because I wanted to store the
 substrings returned form subSting function. I got all the substrings of s for length of t. For each substring
 I checked whether the substring is anagram or not using the anagram function. We are using one for loop to
-iterate through the word list. Therefore the time complexity is O(n). I am using a list data structure to store
-the substrings therefore the space complexity is O(n).
+iterate through the word list and sort within the loop.The sorting has complexity of nlog(n) Therefore the time 
+complexity is O(n^2log(n)). I am using a list data structure to store the substrings therefore the space complexity is O(n).
 
 
 2. I used list data structure words to store the substrings. I used lists because I wanted to store the
