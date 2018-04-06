@@ -306,73 +306,8 @@ def test3():
     print "Case (example case): %s" %result
 
 ######### Question 4 ##################################
-from collections import deque
-
-class TreeNode:
-    def __init__(self, data):
-        self.data = data
-        self.leftChild = None
-        self.rightChild = None
-
-    # Function to insert data into a Tree
-    def insert(self,data):
-        if data < self.data:
-            if not self.leftChild:
-                self.leftChild = TreeNode(data)
-            else:
-                self.leftChild.insert(data)
-        else:
-            if not self.rightChild:
-                self.rightChild = TreeNode(data)
-            else:
-                self.rightChild.insert(data)
-
-    # A utility function to search a given key in BST
-    def search(self,root,key):
-
-        # Base Cases: root is null or key is present at root
-        if root is None or root.data ==key:
-            return root.data
-
-        # Key is greater than root's key
-        if root.data < key:
-            return self.search(root.rightChild,key)
-
-        # Key is smaller than root's key
-        return self.search(root.leftChild,key)
-
-
-    # Function to traverse the tree InOrder traversal
-    def traverseInOrder(self):
-        if self.leftChild:
-            self.leftChild.traverseInOrder()
-
-        print self.data
-
-        if self.rightChild:
-            self.rightChild.traverseInOrder()
-
-    # Function to find least common ancestor
-    def lca(self,root, n1, n2):
-
-        # Base case
-        if root is None:
-            return None
-
-        # If both n1 and n2 are smaller than root,
-        # then LCA lies on left
-        if(root.data > n1 and root.data > n2):
-            return self.lca(root.leftChild, n1, n2)
-
-        # if both n1 and n2 are greater than root,
-        # then LCA lies on right
-        if(root.data < n1 and root.data < n2):
-            return self.lca(root.rightChild, n1, n2)
-
-        return root.data
-
 def question4(T,r,n1,n2):
-
+    
     # make sure r, n1 and n2 are integers
     if type(r) != int:
         return "Error: r not integer!"
@@ -380,54 +315,82 @@ def question4(T,r,n1,n2):
         return "Error: n1 not integer!"
     if type(n2) != int:
         return "Error: n2 not integer!"
+   
+    # Getting the nodes of n1 as list returned from search_node function    
+    node_n1 = search_node(T,r,n1)
+    print("node_n1"+str(node_n1)) 
 
-    # Convert r to type Node i.e. tree
-    root = TreeNode(r)
-    root.leftChild = None
-    root.rightChild = None
-
-    # Store the r in a queue
-    queue1 = deque([r])
-
-    # Iterate until the queue is not None
-    while queue1:
-        #print queue1
-        # Pop the data
-        data = queue1.popleft()
-        # Iterate j till length of matrix
-        for j in range(len(T)):
-            # If the position of matrix is 1
-            if T[data][j] == 1:
-                #print "j" + str(j)
-                # Add the data of j to the queue
-                queue1.append(j)
-        # If data is not the root node
-        if data != r:
-            # Insert the data to he tree
-            root.insert(data)
-
-    # make sure n1 and n2 in the tree
-    n1_data = root.search(root, n1)
-    #print n1_data
-    if n1_data != n1:
-        return "Error: n1 not in the tree!"
-
-    n2_data = root.search(root, n2)
-    #print n2_data
-    if n2_data != n2:
-        return "Error: n2 not in the tree!"
-
-    # Traverse the tree
-    root.traverseInOrder()
-
-    # Return the lca of n1 and n2
-    return root.lca(root, n1, n2)
+    # Getting the nodes of n2 as list returned from search_node function
+    node_n2 = search_node(T,r,n2)
+    print("node_n2"+str(node_n2))
+    
+    for i in range(len(node_n1)):
+        if node_n1[i] != node_n2[i]:
+            return node_n1[i-1]
 
 
-#print(question4(A,3,1,4))
-#print(question4(T,5,4,6))
+def children(T,root):
+
+    """ Given matrix T and root(row no) it gives the columns where it is 1.
+    Suppose we give root = 3 it returns l[0]=0 and l[1] = 4"""
+  
+
+    l = []
+    for col in range(len(T)):
+        if T[root][col] == 1:
+            l.append(col)
+    return l   
 
 
+def search_node(T,root,n):
+    l = []
+    # First we are appending root to a list
+    l.append(root)
+
+    # Checking while n1 or n2 not equal to root
+    while n!= root:
+        # Checking if n1 or n2 is less than root
+        if n < root:
+            # Return the two values in the matrix where it is 1
+            k = children(T,root)
+            #print(k)
+            # If length of the list is 1
+            if len(k) == 1:
+                #print("length"+ str(k[0]))
+                # Append it to the list
+                l.append(k[0])  
+                # Assign the k[0] value to root
+                root = k[0]           
+            else:
+                # If the length of list is 2. Then append the 1st value to the list
+                l.append(k[0])
+                # Assign the k[0] to root
+                root = k[0]            
+
+        # Checking if n1 or n2 is greater than root    
+        if n > root:
+            # Return the two values in the matrix where it is 1
+            m = children(T,root)
+            #print(m)
+            # if length of list is 1
+            if len(m) == 1:
+                # print("length 1")
+                # append m[0] to l
+                l.append(m[0])
+                # Assign m[0] to root
+                root = m[0]
+            else:
+                # if length of list is 2. Then append the second value to the list
+                l.append(m[1])  
+                # Assign m[1] to root
+                root = m[1]
+        # if n1 or n2 equal to root
+        if n == root:
+            # Then assign root to n1 or n2 
+            root = n
+            
+    # Return the list of nodes
+    return l 
 
 def test4():
     print "\nTesting 4"
